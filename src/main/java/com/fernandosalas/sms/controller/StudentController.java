@@ -1,5 +1,4 @@
 package com.fernandosalas.sms.controller;
-
 import com.fernandosalas.sms.dto.StudentDto;
 import com.fernandosalas.sms.service.StudentService;
 import jakarta.validation.Valid;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.List;
 
 @Controller
@@ -81,6 +79,15 @@ public class StudentController {
     public String deleteStudent(@PathVariable("studentId") Long studentId) {
         studentService.deleteStudent(studentId);
         return "redirect:/students";
+    }
+
+    //handle method to handle view student request
+    @GetMapping("/students/{studentId}/view")
+    public String viewStudent(@PathVariable("studentId") Long studentId, Model model) {
+        StudentDto studentDto = studentService.getStudentById(studentId);
+        model.addAttribute("student", studentDto);
+        System.out.println("View is working");
+        return "view_student";
     }
 
 }
